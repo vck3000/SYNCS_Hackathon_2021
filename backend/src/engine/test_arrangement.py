@@ -1,9 +1,9 @@
 import unittest
 
+from .arrangement import Arrangement
+from .bag import Bag
 from .coord import Coord
 from .item import Item
-from .bag import Bag
-from .arrangement import Arrangement
 
 
 class TestArrangement(unittest.TestCase):

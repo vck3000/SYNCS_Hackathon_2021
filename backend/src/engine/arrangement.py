@@ -1,8 +1,8 @@
+from typing import List
+
+from .bag import Bag
 from .coord import Coord
 from .item import Item
-from .bag import Bag
-
-from typing import List
 
 
 class Arrangement:
