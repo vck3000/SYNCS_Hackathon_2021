@@ -6,18 +6,18 @@ from .coord import Coord
 
 
 def value(policy: Arrangement):
-    k1 = 5
+    k1 = 1
     k2 = 1
 
     occupancy = policy.occupancy
     items = policy.items
 
-    unsecured_items_cost = sum((x.get_mass()
-                               for x in get_unsecured_items(occupancy, items)))
+    unsecured_items_cost = sum(
+        (x.get_mass() for x in get_unsecured_items(occupancy, items))
+    )
 
-    val = - (k1 * get_vertical_void_area(occupancy) +
-             k2 * unsecured_items_cost)
-    print(val)
+    val = -(k1 * get_vertical_void_area(occupancy) + k2 * unsecured_items_cost)
+    # print(val)
     return val
 
 
@@ -36,10 +36,13 @@ def get_unsecured_items(occupancy, items):
 
     M = occupancy.copy()
     M[M > 0] = 1
-    edge_change = np.diff(M, prepend=np.ones(
-        (M.shape[1], 1), dtype=int), append=np.ones((M.shape[1], 1), dtype=int))
+    edge_change = np.diff(
+        M,
+        prepend=np.ones((M.shape[1], 1), dtype=int),
+        append=np.ones((M.shape[1], 1), dtype=int),
+    )
 
-    for (item, item_id) in zip(items, range(1, len(items)+1)):
+    for (item, item_id) in zip(items, range(1, len(items) + 1)):
         M = occupancy.copy()
 
         item_mask = np.zeros(occupancy.shape, dtype=int)

@@ -1,12 +1,15 @@
-
-from .arrangement_generator import Timer, generate_arrangements_parallelised
+from .arrangement_generator import (
+    Timer,
+    generate_arrangements_parallelised,
+    generate_arrangements,
+)
 from .arrangement import Arrangement
 from .bag import Bag
 from .coord import Coord
 from .item import Item
 from .valuation import value
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     items = [
         Item(Coord(4, 4), 1, 1),
         Item(Coord(2, 6), 1, 1),
@@ -24,23 +27,21 @@ if __name__ == '__main__':
     with Timer("Parallelised"):
         arrangements = generate_arrangements_parallelised(bag, items)
 
-    # with Timer("Not parallelised"):
-    #     res = generate_arrangements(bag, items)
+    with Timer("Not Parallelised"):
+        arrangements = generate_arrangements(bag, items)
 
     count = 0
 
     for i, arrangement in enumerate(arrangements):
         # arrangement.display()
-        print(str(arrangement))
+        # print(str(arrangement))
         arrangement.value = value(arrangement)
 
         count += 1
 
     arrangements.sort(key=lambda x: x.value, reverse=True)
 
-    # best = arrangements[0]
-    # best.display()
-
     for i, a in enumerate(arrangements):
-        a.display_save(str(i))
-        # a.display()
+        # a.display_save(str(i))
+        a.display()
+        pass

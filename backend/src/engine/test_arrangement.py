@@ -25,7 +25,6 @@ class TestArrangement(unittest.TestCase):
 
         counter = 1
 
-        # TODO - write a nice function for testing many cells!
         self.assertEqual(arrangement.occupancy[0, 0], counter)
         self.assertEqual(arrangement.occupancy[1, 0], counter)
         self.assertEqual(arrangement.occupancy[2, 0], counter)
@@ -144,28 +143,3 @@ class TestArrangement(unittest.TestCase):
 
         self.assertEqual(False, arrangement.add_item(item1, Coord(0, 1)))
         self.assertEqual(True, arrangement.add_item(item1, Coord(1, 0)))
-
-    # def test_too_heavy(self):
-    #     # 10kg bag is been given 30kg item
-    #     bag = Bag(Coord(5, 5), 10)
-    #     items = [Item(Coord(2, 3), 5, 10)]
-
-    #     arrangement = Arrangement(bag, items, [Coord(0, 0)])
-    #     self.assertEquals(False, arrangement.is_valid())
-
-    # TODO
-
-    # def test_item_overlap(self):
-    #     bag = Bag(Coord(5, 5), 10)
-    #     items = [Item(Coord(2, 3), 5, 10), Item(Coord(2, 3), 5, 10)]
-
-    #     arrangement = Arrangement(bag, items, [Coord(0, 0), Coord(0, 0)])
-    #     self.assertEquals(False, arrangement.is_valid())
-
-    # Check x edge overlap
-
-    # Diagonal positioning overlap (corner case) both just in and just out
-
-    # Check y edge overlap
-
-    # Location orientation
