@@ -6,6 +6,9 @@ from .coord import Coord
 
 
 def value(policy: Arrangement):
+    k1 = 5
+    k2 = 1
+
     occupancy = policy.occupancy
     items = policy.items
 
