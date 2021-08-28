@@ -19,15 +19,15 @@ def generate_arrangements_recurse(
 
     valid_arrangements = []
 
-    for item in items:
-        for x in range(arrangement.bag.size.x):
-            for y in range(arrangement.bag.size.y):
+    for x in range(arrangement.bag.size.x):
+        for y in range(arrangement.bag.size.y):
+            for i, item in enumerate(items):
                 new_arrangement = arrangement.clone()
                 res = new_arrangement.add_item(item, Coord(x, y))
 
                 if res == True:
                     valid_arrangements += generate_arrangements_recurse(
-                        items[1:], new_arrangement
+                        items[:i] + items[i + 1 :], new_arrangement
                     )
 
                 # Repeat for inversed item
@@ -36,7 +36,7 @@ def generate_arrangements_recurse(
 
                 if res == True:
                     valid_arrangements += generate_arrangements_recurse(
-                        items[1:], new_arrangement
+                        items[:i] + items[i + 1 :], new_arrangement
                     )
 
     return valid_arrangements
@@ -53,5 +53,14 @@ if __name__ == "__main__":
 
     res = generate_arrangements(bag, items)
 
-    for arrangement in res:
-        arrangement.display()
+    count = 0
+    for i, arrangement in enumerate(res):
+        # arrangement.display()
+        # arrangement.display_save(str(i))
+        print(str(arrangement))
+
+        print(count)
+
+        count += 1
+
+    print(count)

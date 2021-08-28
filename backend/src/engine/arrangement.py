@@ -104,6 +104,26 @@ class Arrangement:
         plt.title("Arrangement")
         plt.show()
 
+    def display_save(self, name):
+        data = self.occupancy
+
+        plt.clf()
+        plt.imshow(data, cmap="hot_r", origin="lower", vmin=0, vmax=len(self.items) + 1)
+        plt.colorbar()
+        plt.xlabel("x")
+        plt.ylabel("y")
+        plt.title("Arrangement")
+
+        plt.savefig(f"./output/{name}.png")
+
+    def __str__(self):
+        outputStr = "Locations: \n"
+
+        for location in self.locations:
+            outputStr += str(location) + "\n"
+
+        return outputStr
+
     # def is_valid(self):
     #
 
