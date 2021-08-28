@@ -34,6 +34,10 @@ class TestArrangement(unittest.TestCase):
         arrangement = self.create_simple_arrangement(Coord(2, 3), Coord(3, 0))
         self.assertEquals(True, arrangement.is_valid())
 
+        # Item over the y edge of bag
+        arrangement = self.create_simple_arrangement(Coord(2, 3), Coord(0, 3))
+        self.assertEquals(False, arrangement.is_valid())
+
     def test_too_heavy(self):
         # 10kg bag is been given 30kg item
         bag = Bag(Coord(5, 5), 10)
