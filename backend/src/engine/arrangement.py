@@ -22,15 +22,23 @@ class Arrangement:
 
     def __init__(self, bag: Bag):
         self.bag = bag  # The bag
-        self.items = dict()  # Dictionary of items in the bag
         self.mass_filled = 0  # Mass of items in the bag
 
         # Create occupancy matrix with bag dimensions
         self.occupancy = np.zeros((bag.size.x, bag.size.y), dtype=int)
 
+        self.items = []
         self.locations = []
 
         self.counter = 1
+
+    def clone(self):
+        clone = Arrangement(self.bag)
+
+        for item, location in zip(self.items, self.locations):
+            clone.add_item(item, location)
+
+        return clone
 
     # Add an item at the given coordinate
     # Return false if placing this item would violate imposed conditions
@@ -55,6 +63,17 @@ class Arrangement:
                 if self.occupancy[y, x] != 0:
                     return False
 
+        # Check floating
+        floating = False if location.y == 0 else True
+        if location.y != 0:
+            for x in range(location.x, location.x + item.size.x):
+                # If any of the below cells are filled
+                if self.occupancy[location.y - 1, x] != 0:
+                    floating = False
+
+        if floating:
+            return False
+
         # TODO: make add steps into separate function
         #! Should not add unless all checks passed!
         # Place in occupancy grid
@@ -66,8 +85,8 @@ class Arrangement:
         # Increment mass
         self.mass_filled += item.get_mass()
 
-        # Store in dictionary
-        self.items[self.counter] = item
+        self.items.append(item)
+        self.locations.append(location)
 
         self.counter += 1
 
@@ -76,12 +95,7 @@ class Arrangement:
     # Plot with matplotlib
 
     def display(self):
-
         data = self.occupancy
-
-        # Replace big id values in matrix with integers 1, 2, 3... etc so that heat map scales nicely
-        for key, index in zip(self.items, range(len(self.items))):
-            data = np.where(data == key, index + 1, data)
 
         plt.imshow(data, cmap="hot_r", origin="lower", vmin=0, vmax=len(self.items) + 1)
         plt.colorbar()

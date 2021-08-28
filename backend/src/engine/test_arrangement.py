@@ -50,26 +50,37 @@ class TestArrangement(unittest.TestCase):
 
         return arrangement
 
+    def test_floating_item_placement(self):
+        item1 = Item(Coord(2, 2), 5, 10)
+        item2 = Item(Coord(2, 2), 5, 10)
+
+        arrangement = Arrangement(self.bag)
+
+        self.assertEqual(True, arrangement.add_item(item1, Coord(0, 0)))
+        # Should not allow floating placement
+        self.assertEqual(False, arrangement.add_item(item1, Coord(0, 3)))
+        self.assertEqual(True, arrangement.add_item(item1, Coord(0, 2)))
+
     # Arrangement with two valid items
     def test_create_arrangement_multiple_items(self):
 
         item1 = Item(Coord(2, 2), 5, 10)
         item2 = Item(Coord(2, 2), 5, 10)
         items = [item1, item2]
-        locations = [Coord(0, 0), Coord(0, 3)]
+        locations = [Coord(0, 0), Coord(0, 2)]
         arrangement = self.create_arrangement_multiple(items, locations)
 
         self.assertEqual(arrangement.occupancy[0, 0], 1)
         self.assertEqual(arrangement.occupancy[1, 0], 1)
-        self.assertEqual(arrangement.occupancy[2, 0], 0)
+        self.assertEqual(arrangement.occupancy[2, 0], 2)
         self.assertEqual(arrangement.occupancy[3, 0], 2)
-        self.assertEqual(arrangement.occupancy[4, 0], 2)
+        self.assertEqual(arrangement.occupancy[4, 0], 0)
 
         self.assertEqual(arrangement.occupancy[0, 1], 1)
         self.assertEqual(arrangement.occupancy[1, 1], 1)
-        self.assertEqual(arrangement.occupancy[2, 1], 0)
+        self.assertEqual(arrangement.occupancy[2, 1], 2)
         self.assertEqual(arrangement.occupancy[3, 1], 2)
-        self.assertEqual(arrangement.occupancy[4, 1], 2)
+        self.assertEqual(arrangement.occupancy[4, 1], 0)
 
         self.assertEqual(arrangement.occupancy[0, 2], 0)
         self.assertEqual(arrangement.occupancy[1, 2], 0)
@@ -126,6 +137,13 @@ class TestArrangement(unittest.TestCase):
         item2 = Item(Coord(1, 2), 500, 10)
         self.assertEqual(False, arrangement.add_item(item2, Coord(1, 0)))
         self.assertEqual(1 * 3 * 5, arrangement.mass_filled)
+
+    def test_floating(self):
+        arrangement = Arrangement(self.bag)
+        item1 = Item(Coord(1, 3), 5, 10)
+
+        self.assertEqual(False, arrangement.add_item(item1, Coord(0, 1)))
+        self.assertEqual(True, arrangement.add_item(item1, Coord(1, 0)))
 
     # def test_too_heavy(self):
     #     # 10kg bag is been given 30kg item
