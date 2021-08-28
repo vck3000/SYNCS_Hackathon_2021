@@ -20,7 +20,7 @@ class Solver:
 
     def run(self):
         placed_item_count = 0
-        while len(sorted_items) > 0:
+        while len(self.sorted_items) > 0:
             current_item = self.sorted_items.pop()
             isSuccessful = self.place_item(
                 self.arrangement, current_item, self.placement_strategy)
