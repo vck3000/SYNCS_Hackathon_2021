@@ -20,24 +20,24 @@ class TestArrangement(unittest.TestCase):
     # Arrangement with one valid item
     def test_create_arrangement_items(self):
         arrangement = Arrangement(self.bag)
-        item = Item(Coord(2, 3),5,10)
+        item = Item(Coord(2, 3), 5, 10)
         arrangement.add_item(item, Coord(0, 0))
-        
-        #TODO - write a nice function for testing many cells!
-        self.assertEqual(arrangement.occupancy[0,0], id(item))
-        self.assertEqual(arrangement.occupancy[0,1], id(item))
-        self.assertEqual(arrangement.occupancy[0,2], id(item))
-        self.assertNotEqual(arrangement.occupancy[0,3], id(item))
 
-        self.assertEqual(arrangement.occupancy[1,0], id(item))
-        self.assertEqual(arrangement.occupancy[1,1], id(item))
-        self.assertEqual(arrangement.occupancy[1,2], id(item))
-        self.assertNotEqual(arrangement.occupancy[1,3], id(item))
+        # TODO - write a nice function for testing many cells!
+        self.assertEqual(arrangement.occupancy[0, 0], id(item))
+        self.assertEqual(arrangement.occupancy[1, 0], id(item))
+        self.assertEqual(arrangement.occupancy[2, 0], id(item))
+        self.assertNotEqual(arrangement.occupancy[3, 0], id(item))
 
-        self.assertNotEqual(arrangement.occupancy[2,0], id(item))
-        self.assertNotEqual(arrangement.occupancy[2,1], id(item))
-        self.assertNotEqual(arrangement.occupancy[2,2], id(item))
-        self.assertNotEqual(arrangement.occupancy[2,3], id(item))
+        self.assertEqual(arrangement.occupancy[0, 1], id(item))
+        self.assertEqual(arrangement.occupancy[1, 1], id(item))
+        self.assertEqual(arrangement.occupancy[2, 1], id(item))
+        self.assertNotEqual(arrangement.occupancy[3, 1], id(item))
+
+        self.assertNotEqual(arrangement.occupancy[0, 2], id(item))
+        self.assertNotEqual(arrangement.occupancy[1, 2], id(item))
+        self.assertNotEqual(arrangement.occupancy[2, 2], id(item))
+        self.assertNotEqual(arrangement.occupancy[3, 2], id(item))
 
     # Helper function to create an arrangement with multiple items
     def create_arrangement_multiple(self, items: List[Item], locations: List[Coord]):
@@ -51,35 +51,35 @@ class TestArrangement(unittest.TestCase):
     # Arrangement with two valid items
     def test_create_arrangement_multiple_items(self):
 
-        item1 = Item(Coord(2, 2),5,10)
-        item2 = Item(Coord(2, 2),5,10)
+        item1 = Item(Coord(2, 2), 5, 10)
+        item2 = Item(Coord(2, 2), 5, 10)
         items = [item1, item2]
-        locations = [Coord(0,0), Coord(0, 3)]
+        locations = [Coord(0, 0), Coord(0, 3)]
         arrangement = self.create_arrangement_multiple(items, locations)
 
-        self.assertEqual(arrangement.occupancy[0,0], id(item1))
-        self.assertEqual(arrangement.occupancy[0,1], id(item1))
-        self.assertEqual(arrangement.occupancy[0,2], 0)
-        self.assertEqual(arrangement.occupancy[0,3], id(item2))
-        self.assertEqual(arrangement.occupancy[0,4], id(item2))
+        self.assertEqual(arrangement.occupancy[0, 0], id(item1))
+        self.assertEqual(arrangement.occupancy[1, 0], id(item1))
+        self.assertEqual(arrangement.occupancy[2, 0], 0)
+        self.assertEqual(arrangement.occupancy[3, 0], id(item2))
+        self.assertEqual(arrangement.occupancy[4, 0], id(item2))
 
-        self.assertEqual(arrangement.occupancy[1,0], id(item1))
-        self.assertEqual(arrangement.occupancy[1,1], id(item1))
-        self.assertEqual(arrangement.occupancy[1,2], 0)
-        self.assertEqual(arrangement.occupancy[1,3], id(item2))
-        self.assertEqual(arrangement.occupancy[1,4], id(item2))
+        self.assertEqual(arrangement.occupancy[0, 1], id(item1))
+        self.assertEqual(arrangement.occupancy[1, 1], id(item1))
+        self.assertEqual(arrangement.occupancy[2, 1], 0)
+        self.assertEqual(arrangement.occupancy[3, 1], id(item2))
+        self.assertEqual(arrangement.occupancy[4, 1], id(item2))
 
-        self.assertEqual(arrangement.occupancy[2,0], 0)
-        self.assertEqual(arrangement.occupancy[2,1], 0)
-        self.assertEqual(arrangement.occupancy[2,2], 0)
-        self.assertEqual(arrangement.occupancy[2,3], 0)
-        self.assertEqual(arrangement.occupancy[2,4], 0)
-
+        self.assertEqual(arrangement.occupancy[0, 2], 0)
+        self.assertEqual(arrangement.occupancy[1, 2], 0)
+        self.assertEqual(arrangement.occupancy[2, 2], 0)
+        self.assertEqual(arrangement.occupancy[3, 2], 0)
+        self.assertEqual(arrangement.occupancy[4, 2], 0)
 
     # Arrangement with items out of bounds
+
     def test_invalid_arrangement_out_of_bound(self):
 
-        item = Item(Coord(2, 3),5,10)
+        item = Item(Coord(2, 3), 5, 10)
 
         # Item way outside
         arrangement = Arrangement(self.bag)
@@ -102,29 +102,28 @@ class TestArrangement(unittest.TestCase):
         arrangement = Arrangement(self.bag)
         self.assertEqual(0, len(arrangement.items))
 
-        item1 = Item(Coord(1, 3),5,10)
+        item1 = Item(Coord(1, 3), 5, 10)
         arrangement.add_item(item1, Coord(0, 0))
         self.assertEqual(1, len(arrangement.items))
 
-        item2 = Item(Coord(1, 2),5,10)
+        item2 = Item(Coord(1, 2), 5, 10)
         arrangement.add_item(item2, Coord(1, 0))
         self.assertEqual(2, len(arrangement.items))
 
-        item3 = Item(Coord(1, 2),5,10)
+        item3 = Item(Coord(1, 2), 5, 10)
         arrangement.add_item(item3, Coord(2, 0))
         self.assertEqual(3, len(arrangement.items))
 
     def test_invalid_arrangement_mass(self):
 
         arrangement = Arrangement(self.bag)
-        item1 = Item(Coord(1, 3),5,10)
+        item1 = Item(Coord(1, 3), 5, 10)
         self.assertEqual(True, arrangement.add_item(item1, Coord(0, 0)))
         self.assertEqual(1*3*5, arrangement.mass_filled)
 
-        item2 = Item(Coord(1, 2),500,10)
+        item2 = Item(Coord(1, 2), 500, 10)
         self.assertEqual(False, arrangement.add_item(item2, Coord(1, 0)))
         self.assertEqual(1*3*5, arrangement.mass_filled)
-
 
     # def test_too_heavy(self):
     #     # 10kg bag is been given 30kg item

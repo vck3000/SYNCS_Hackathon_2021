@@ -10,12 +10,13 @@ from .item import Item
 class Arrangement:
     """An arrangement is a solution.
 
+    np.array[y,x]
     ---------------
-    |(n,0)   (n,n)|
+    |[n,0]   [n,n]|
     |             |
     |             |
     |             |
-    |(0,0)   (0,n)|
+    |[0,0]   [0,n]|
     ---------------
     """
 
@@ -32,7 +33,7 @@ class Arrangement:
     # Return true otherwise
     def add_item(self, item: Item, location: Coord):
 
-        #TODO: make checks into separate function
+        # TODO: make checks into separate function
         # Check item bounds
         if location.x + item.size.x > self.bag.size.x:
             return False
@@ -47,16 +48,16 @@ class Arrangement:
         # Check occupancy grid vacant
         for x in range(location.x, location.x + item.size.x):
             for y in range(location.y, location.y + item.size.y):
-                if(self.occupancy[x, y] != 0):
+                if(self.occupancy[y, x] != 0):
                     return False
 
-        #TODO: make add steps into separate function
-        #! Should not add unless all checks passed! 
+        # TODO: make add steps into separate function
+        #! Should not add unless all checks passed!
         # Place in occupancy grid
         for x in range(location.x, location.x + item.size.x):
             for y in range(location.y, location.y + item.size.y):
                 # Assign corresponding occupancy grid square the value of the item's id
-                self.occupancy[x, y] = id(item)
+                self.occupancy[y, x] = id(item)
 
         # Increment mass
         self.mass_filled += item.get_mass()
@@ -65,8 +66,8 @@ class Arrangement:
         self.items[id(item)] = item
         return True
 
-
     # Plot with matplotlib
+
     def display(self):
 
         data = self.occupancy
@@ -75,15 +76,16 @@ class Arrangement:
         for key, index in zip(self.items, range(len(self.items))):
             data = np.where(data == key, index+1, data)
 
-        plt.imshow(data, cmap='hot_r', origin='lower',  vmin=0, vmax=len(self.items)+1)
+        plt.imshow(data, cmap='hot_r', origin='lower',
+                   vmin=0, vmax=len(self.items)+1)
+        plt.colorbar()
         plt.xlabel("x")
         plt.ylabel("y")
         plt.title("Arrangement")
         plt.show()
 
-
     # def is_valid(self):
-    #     
+    #
 
     #     # Add up all item weights and ensure not exceeding bag
     #     net_mass = 0

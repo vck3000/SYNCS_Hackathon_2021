@@ -50,7 +50,7 @@ class Solver:
         else:
             raise NotImplementedError
 
-        sorted_items = sorted(items, key=sort_key)
+        sorted_items = sorted(items, key=sort_key, reverse=False)
         return sorted_items
 
     # Item placement strategy
