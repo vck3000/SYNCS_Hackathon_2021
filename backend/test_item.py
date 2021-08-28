@@ -1,6 +1,6 @@
-from coord import Coord
 import unittest
 
+from coord import Coord
 from item import Item
 
 

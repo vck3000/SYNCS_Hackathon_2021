@@ -1,5 +1,8 @@
+from coord import Coord
+
+
 class Item:
-    def __init__(self, size, mass_density, strength):
+    def __init__(self, size: Coord, mass_density: int, strength: int):
         self.size = size
         self.mass_density = mass_density
         self.strength = strength
