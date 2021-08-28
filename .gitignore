@@ -3,3 +3,4 @@ __pycache__
 *.code-workspace
 .vscode/settings.json
 backend/src/output/
+backend/src/output_big/
