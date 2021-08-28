@@ -8,31 +8,35 @@ from enum import Enum
 
 
 class Solver:
-
-    def __init__(self, arrangement: Arrangement, items: List[Item], strategies: Tuple[int]):
+    def __init__(
+        self, arrangement: Arrangement, items: List[Item], strategies: Tuple[int]
+    ):
         self.arrangement = arrangement
         self.items = items
         self.placement_order_strategy = strategies[0]
         self.placement_strategy = strategies[0]
 
         self.sorted_items = self.get_placement_order(
-            items, self.placement_order_strategy)
+            items, self.placement_order_strategy
+        )
 
     def run(self):
         placed_item_count = 0
         while len(self.sorted_items) > 0:
             current_item = self.sorted_items.pop()
             isSuccessful = self.place_item(
-                self.arrangement, current_item, self.placement_strategy)
+                self.arrangement, current_item, self.placement_strategy
+            )
 
             if not isSuccessful:
-                print(
-                    f"After placing {placed_item_count} items, unable to place next item: {current_item}")
+                # print(
+                #     f"After placing {placed_item_count} items, unable to place next item: {current_item}"
+                # )
                 return False
 
             placed_item_count += 1
 
-        print(f"Solver ran successfully, placed {placed_item_count} items")
+        # print(f"Solver ran successfully, placed {placed_item_count} items")
         return True
 
     # Item placement order strategy
@@ -42,11 +46,20 @@ class Solver:
 
     def get_placement_order(self, items: List[Item], strategy: int) -> List[Item]:
         if strategy == self.STRONGEST_FIRST:
-            def sort_key(item): return item.strength
+
+            def sort_key(item):
+                return item.strength
+
         elif strategy == self.DENSEST_FIRST:
-            def sort_key(item): return item.mass_density
+
+            def sort_key(item):
+                return item.mass_density
+
         elif strategy == self.BIGGEST_FIRST:
-            def sort_key(item): return item.get_area()
+
+            def sort_key(item):
+                return item.get_area()
+
         else:
             raise NotImplementedError
 

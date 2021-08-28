@@ -23,21 +23,23 @@ class TestArrangement(unittest.TestCase):
         item = Item(Coord(2, 3), 5, 10)
         arrangement.add_item(item, Coord(0, 0))
 
+        counter = 1
+
         # TODO - write a nice function for testing many cells!
-        self.assertEqual(arrangement.occupancy[0, 0], id(item))
-        self.assertEqual(arrangement.occupancy[1, 0], id(item))
-        self.assertEqual(arrangement.occupancy[2, 0], id(item))
-        self.assertNotEqual(arrangement.occupancy[3, 0], id(item))
+        self.assertEqual(arrangement.occupancy[0, 0], counter)
+        self.assertEqual(arrangement.occupancy[1, 0], counter)
+        self.assertEqual(arrangement.occupancy[2, 0], counter)
+        self.assertNotEqual(arrangement.occupancy[3, 0], counter)
 
-        self.assertEqual(arrangement.occupancy[0, 1], id(item))
-        self.assertEqual(arrangement.occupancy[1, 1], id(item))
-        self.assertEqual(arrangement.occupancy[2, 1], id(item))
-        self.assertNotEqual(arrangement.occupancy[3, 1], id(item))
+        self.assertEqual(arrangement.occupancy[0, 1], counter)
+        self.assertEqual(arrangement.occupancy[1, 1], counter)
+        self.assertEqual(arrangement.occupancy[2, 1], counter)
+        self.assertNotEqual(arrangement.occupancy[3, 1], counter)
 
-        self.assertNotEqual(arrangement.occupancy[0, 2], id(item))
-        self.assertNotEqual(arrangement.occupancy[1, 2], id(item))
-        self.assertNotEqual(arrangement.occupancy[2, 2], id(item))
-        self.assertNotEqual(arrangement.occupancy[3, 2], id(item))
+        self.assertNotEqual(arrangement.occupancy[0, 2], counter)
+        self.assertNotEqual(arrangement.occupancy[1, 2], counter)
+        self.assertNotEqual(arrangement.occupancy[2, 2], counter)
+        self.assertNotEqual(arrangement.occupancy[3, 2], counter)
 
     # Helper function to create an arrangement with multiple items
     def create_arrangement_multiple(self, items: List[Item], locations: List[Coord]):
@@ -57,17 +59,17 @@ class TestArrangement(unittest.TestCase):
         locations = [Coord(0, 0), Coord(0, 3)]
         arrangement = self.create_arrangement_multiple(items, locations)
 
-        self.assertEqual(arrangement.occupancy[0, 0], id(item1))
-        self.assertEqual(arrangement.occupancy[1, 0], id(item1))
+        self.assertEqual(arrangement.occupancy[0, 0], 1)
+        self.assertEqual(arrangement.occupancy[1, 0], 1)
         self.assertEqual(arrangement.occupancy[2, 0], 0)
-        self.assertEqual(arrangement.occupancy[3, 0], id(item2))
-        self.assertEqual(arrangement.occupancy[4, 0], id(item2))
+        self.assertEqual(arrangement.occupancy[3, 0], 2)
+        self.assertEqual(arrangement.occupancy[4, 0], 2)
 
-        self.assertEqual(arrangement.occupancy[0, 1], id(item1))
-        self.assertEqual(arrangement.occupancy[1, 1], id(item1))
+        self.assertEqual(arrangement.occupancy[0, 1], 1)
+        self.assertEqual(arrangement.occupancy[1, 1], 1)
         self.assertEqual(arrangement.occupancy[2, 1], 0)
-        self.assertEqual(arrangement.occupancy[3, 1], id(item2))
-        self.assertEqual(arrangement.occupancy[4, 1], id(item2))
+        self.assertEqual(arrangement.occupancy[3, 1], 2)
+        self.assertEqual(arrangement.occupancy[4, 1], 2)
 
         self.assertEqual(arrangement.occupancy[0, 2], 0)
         self.assertEqual(arrangement.occupancy[1, 2], 0)
@@ -119,11 +121,11 @@ class TestArrangement(unittest.TestCase):
         arrangement = Arrangement(self.bag)
         item1 = Item(Coord(1, 3), 5, 10)
         self.assertEqual(True, arrangement.add_item(item1, Coord(0, 0)))
-        self.assertEqual(1*3*5, arrangement.mass_filled)
+        self.assertEqual(1 * 3 * 5, arrangement.mass_filled)
 
         item2 = Item(Coord(1, 2), 500, 10)
         self.assertEqual(False, arrangement.add_item(item2, Coord(1, 0)))
-        self.assertEqual(1*3*5, arrangement.mass_filled)
+        self.assertEqual(1 * 3 * 5, arrangement.mass_filled)
 
     # def test_too_heavy(self):
     #     # 10kg bag is been given 30kg item
@@ -142,10 +144,10 @@ class TestArrangement(unittest.TestCase):
     #     arrangement = Arrangement(bag, items, [Coord(0, 0), Coord(0, 0)])
     #     self.assertEquals(False, arrangement.is_valid())
 
-        # Check x edge overlap
+    # Check x edge overlap
 
-        # Diagonal positioning overlap (corner case) both just in and just out
+    # Diagonal positioning overlap (corner case) both just in and just out
 
-        # Check y edge overlap
+    # Check y edge overlap
 
-        # Location orientation
+    # Location orientation

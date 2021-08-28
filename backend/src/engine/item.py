@@ -12,3 +12,6 @@ class Item:
 
     def get_mass(self):
         return self.get_area() * self.mass_density
+
+    def get_inverse(self):
+        return Item(Coord(self.size.y, self.size.x), self.mass_density, self.strength)

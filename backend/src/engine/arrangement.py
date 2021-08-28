@@ -21,12 +21,16 @@ class Arrangement:
     """
 
     def __init__(self, bag: Bag):
-        self.bag = bag          # The bag
-        self.items = dict()     # Dictionary of items in the bag
-        self.mass_filled = 0    # Mass of items in the bag
+        self.bag = bag  # The bag
+        self.items = dict()  # Dictionary of items in the bag
+        self.mass_filled = 0  # Mass of items in the bag
 
         # Create occupancy matrix with bag dimensions
         self.occupancy = np.zeros((bag.size.x, bag.size.y), dtype=int)
+
+        self.locations = []
+
+        self.counter = 1
 
     # Add an item at the given coordinate
     # Return false if placing this item would violate imposed conditions
@@ -48,7 +52,7 @@ class Arrangement:
         # Check occupancy grid vacant
         for x in range(location.x, location.x + item.size.x):
             for y in range(location.y, location.y + item.size.y):
-                if(self.occupancy[y, x] != 0):
+                if self.occupancy[y, x] != 0:
                     return False
 
         # TODO: make add steps into separate function
@@ -57,13 +61,16 @@ class Arrangement:
         for x in range(location.x, location.x + item.size.x):
             for y in range(location.y, location.y + item.size.y):
                 # Assign corresponding occupancy grid square the value of the item's id
-                self.occupancy[y, x] = id(item)
+                self.occupancy[y, x] = self.counter
 
         # Increment mass
         self.mass_filled += item.get_mass()
 
         # Store in dictionary
-        self.items[id(item)] = item
+        self.items[self.counter] = item
+
+        self.counter += 1
+
         return True
 
     # Plot with matplotlib
@@ -74,10 +81,9 @@ class Arrangement:
 
         # Replace big id values in matrix with integers 1, 2, 3... etc so that heat map scales nicely
         for key, index in zip(self.items, range(len(self.items))):
-            data = np.where(data == key, index+1, data)
+            data = np.where(data == key, index + 1, data)
 
-        plt.imshow(data, cmap='hot_r', origin='lower',
-                   vmin=0, vmax=len(self.items)+1)
+        plt.imshow(data, cmap="hot_r", origin="lower", vmin=0, vmax=len(self.items) + 1)
         plt.colorbar()
         plt.xlabel("x")
         plt.ylabel("y")
