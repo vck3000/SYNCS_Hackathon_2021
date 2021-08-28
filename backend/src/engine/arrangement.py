@@ -61,7 +61,7 @@ class Arrangement:
         for key, index in zip(self.items, range(len(self.items))):
             data = np.where(data == key, index+1, data)
 
-        plt.imshow(data, cmap='hot_r', origin='lower')
+        plt.imshow(data, cmap='hot_r', origin='lower',  vmin=0, vmax=len(self.items)+1)
         plt.xlabel("x")
         plt.ylabel("y")
         plt.title("Arrangement")
