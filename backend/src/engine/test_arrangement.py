@@ -114,6 +114,16 @@ class TestArrangement(unittest.TestCase):
         arrangement.add_item(item3, Coord(2, 0))
         self.assertEqual(3, len(arrangement.items))
 
+    def test_invalid_arrangement_mass(self):
+
+        arrangement = Arrangement(self.bag)
+        item1 = Item(Coord(1, 3),5,10)
+        self.assertEqual(True, arrangement.add_item(item1, Coord(0, 0)))
+        self.assertEqual(1*3*5, arrangement.mass_filled)
+
+        item2 = Item(Coord(1, 2),500,10)
+        self.assertEqual(False, arrangement.add_item(item2, Coord(1, 0)))
+        self.assertEqual(1*3*5, arrangement.mass_filled)
 
 
     # def test_too_heavy(self):
