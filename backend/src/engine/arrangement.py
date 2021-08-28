@@ -23,6 +23,7 @@ class Arrangement:
     def __init__(self, bag: Bag):
         self.bag = bag  # The bag
         self.mass_filled = 0  # Mass of items in the bag
+        self.value = None
 
         # Create occupancy matrix with bag dimensions
         self.occupancy = np.zeros((bag.size.x, bag.size.y), dtype=int)
@@ -97,22 +98,24 @@ class Arrangement:
     def display(self):
         data = self.occupancy
 
-        plt.imshow(data, cmap="hot_r", origin="lower", vmin=0, vmax=len(self.items) + 1)
+        plt.imshow(data, cmap="hot_r", origin="lower",
+                   vmin=0, vmax=len(self.items) + 1)
         plt.colorbar()
         plt.xlabel("x")
         plt.ylabel("y")
-        plt.title("Arrangement")
+        plt.title(f"Value: {self.value}")
         plt.show()
 
     def display_save(self, name):
         data = self.occupancy
 
         plt.clf()
-        plt.imshow(data, cmap="hot_r", origin="lower", vmin=0, vmax=len(self.items) + 1)
+        plt.imshow(data, cmap="hot_r", origin="lower",
+                   vmin=0, vmax=len(self.items) + 1)
         plt.colorbar()
         plt.xlabel("x")
         plt.ylabel("y")
-        plt.title("Arrangement")
+        plt.title(f"Value: {self.value}")
 
         plt.savefig(f"./output/{name}.png")
 

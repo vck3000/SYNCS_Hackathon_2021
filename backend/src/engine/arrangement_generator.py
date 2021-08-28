@@ -52,7 +52,8 @@ def generate_arrangements_parallelised(bag: Bag, items: List[Item]):
     x_start_mapped = intervals[0:-1]
     x_end_mapped = intervals[1:]
 
-    data_mapped = zip(items_mapped, arrangements_mapped, x_start_mapped, x_end_mapped)
+    data_mapped = zip(items_mapped, arrangements_mapped,
+                      x_start_mapped, x_end_mapped)
 
     # print(list(data_mapped))
 
@@ -99,14 +100,17 @@ def generate_arrangements_iterative_parallelised(
                     res = new_arrangement.add_item(item, Coord(x, y))
 
                     if res == True:
-                        nodes.append((items[:i] + items[i + 1 :], new_arrangement))
+                        nodes.append(
+                            (items[:i] + items[i + 1:], new_arrangement))
 
                     # Repeat for inversed item
                     new_arrangement = arrangement.clone()
-                    res = new_arrangement.add_item(item.get_inverse(), Coord(x, y))
+                    res = new_arrangement.add_item(
+                        item.get_inverse(), Coord(x, y))
 
                     if res == True:
-                        nodes.append((items[:i] + items[i + 1 :], new_arrangement))
+                        nodes.append(
+                            (items[:i] + items[i + 1:], new_arrangement))
 
             # After first block is placed, x now spans anywhere across the x axis
             x_start = 0
@@ -139,7 +143,7 @@ def generate_arrangements_recurse_parallelised(
 
                 if res == True:
                     valid_arrangements += generate_arrangements_recurse(
-                        items[:i] + items[i + 1 :], new_arrangement
+                        items[:i] + items[i + 1:], new_arrangement
                     )
 
                 # Repeat for inversed item
@@ -148,7 +152,7 @@ def generate_arrangements_recurse_parallelised(
 
                 if res == True:
                     valid_arrangements += generate_arrangements_recurse(
-                        items[:i] + items[i + 1 :], new_arrangement
+                        items[:i] + items[i + 1:], new_arrangement
                     )
 
     # Optional matplotlib savefig
@@ -176,7 +180,7 @@ def generate_arrangements_recurse(
 
                 if res == True:
                     valid_arrangements += generate_arrangements_recurse(
-                        items[:i] + items[i + 1 :], new_arrangement
+                        items[:i] + items[i + 1:], new_arrangement
                     )
 
                 # Repeat for inversed item
@@ -185,7 +189,7 @@ def generate_arrangements_recurse(
 
                 if res == True:
                     valid_arrangements += generate_arrangements_recurse(
-                        items[:i] + items[i + 1 :], new_arrangement
+                        items[:i] + items[i + 1:], new_arrangement
                     )
 
     return valid_arrangements
@@ -204,19 +208,21 @@ if __name__ == "__main__":
         # Item(Coord(2, 2), 1, 1),
     ]
 
-    bag = Bag(Coord(16, 16), 1000)
+    bag = Bag(Coord(8, 8), 1000)
 
     with Timer("Parallelised"):
-        res = generate_arrangements_parallelised(bag, items)
+        arrangements = generate_arrangements_parallelised(bag, items)
 
     # with Timer("Not parallelised"):
     #     res = generate_arrangements(bag, items)
 
     count = 0
-    for i, arrangement in enumerate(res):
+    
+    
+    for i, arrangement in enumerate(arrangements):
         # arrangement.display()
         # arrangement.display_save(str(i))
-        # print(str(arrangement))
+        print(str(arrangement))
 
         # print(count)
 
