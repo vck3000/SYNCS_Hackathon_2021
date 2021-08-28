@@ -7,7 +7,30 @@ from .item import Item
 from .solvers import Solver
 
 
-class BasicExperiments(unittest.TestCase):
+class SingleItemExperiments(unittest.TestCase):
+
+    def test_fit(self):
+        bag = Bag(Coord(5, 5), 100)
+        items = [Item(Coord(1, 2), 1, 10)]
+
+        arrangement = Arrangement(bag)
+        solver = Solver(arrangement, items,
+                        (Solver.STRONGEST_FIRST, Solver.BOTTOM_LEFT_FIRST))
+
+        self.assertTrue(solver.run())
+        # arrangement.display()
+
+    def test_fit_perfect(self):
+        bag = Bag(Coord(5, 5), 100)
+        items = [Item(Coord(5, 5), 1, 10)]
+
+        arrangement = Arrangement(bag)
+        solver = Solver(arrangement, items,
+                        (Solver.STRONGEST_FIRST, Solver.BOTTOM_LEFT_FIRST))
+
+        self.assertTrue(solver.run())
+        arrangement.display()
+
 
     def test_no_items(self):
         bag = Bag(Coord(5, 5), 100)
@@ -18,6 +41,7 @@ class BasicExperiments(unittest.TestCase):
                         (Solver.STRONGEST_FIRST, Solver.BOTTOM_LEFT_FIRST))
 
         self.assertTrue(solver.run())
+        # arrangement.display()
 
     def test_no_solution(self):
         bag = Bag(Coord(5, 5), 100)
@@ -28,13 +52,5 @@ class BasicExperiments(unittest.TestCase):
                         (Solver.STRONGEST_FIRST, Solver.BOTTOM_LEFT_FIRST))
 
         self.assertFalse(solver.run())
+        # arrangement.display()
 
-    def test_perfect_fit(self):
-        bag = Bag(Coord(5, 5), 100)
-        items = [Item(Coord(5, 5), 1, 10)]
-
-        arrangement = Arrangement(bag)
-        solver = Solver(arrangement, items,
-                        (Solver.STRONGEST_FIRST, Solver.BOTTOM_LEFT_FIRST))
-
-        self.assertTrue(solver.run())
