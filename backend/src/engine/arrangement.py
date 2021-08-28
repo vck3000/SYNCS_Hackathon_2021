@@ -1,9 +1,8 @@
-from coord import Coord
-from item import Item
-from bag import Bag
-from typing import List
+from .coord import Coord
+from .item import Item
+from .bag import Bag
 
-from functools import reduce
+from typing import List
 
 
 class Arrangement:

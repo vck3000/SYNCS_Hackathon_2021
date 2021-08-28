@@ -1,4 +1,4 @@
-from coord import Coord
+from .coord import Coord
 
 
 class Item:

@@ -1,7 +1,7 @@
 import unittest
 
-from coord import Coord
-from item import Item
+from .coord import Coord
+from .item import Item
 
 
 class TestItem(unittest.TestCase):
