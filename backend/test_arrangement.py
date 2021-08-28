@@ -42,9 +42,19 @@ class TestArrangement(unittest.TestCase):
         arrangement = Arrangement(bag, items, [Coord(0, 0)])
         self.assertEquals(False, arrangement.is_valid())
 
+    # TODO
+
     def test_item_overlap(self):
         bag = Bag(Coord(5, 5), 10)
         items = [Item(Coord(2, 3), 5, 10), Item(Coord(2, 3), 5, 10)]
 
         arrangement = Arrangement(bag, items, [Coord(0, 0), Coord(0, 0)])
         self.assertEquals(False, arrangement.is_valid())
+
+        # Check x edge overlap
+
+        # Diagonal positioning overlap (corner case) both just in and just out
+
+        # Check y edge overlap
+
+        # Location orientation
