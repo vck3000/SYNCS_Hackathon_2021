@@ -22,10 +22,16 @@ class Arrangement:
         self.bag = bag
 
         # Create occupancy matrix with bag dimensions
-        self.occupancy = np.zeros((bag.size.x, bag.size.y))
+        self.occupancy = np.zeros((bag.size.x, bag.size.y), dtype=int)
 
     def add_item(self, item: Item, location: Coord):
-        pass
+
+        # Iterate over x and y values
+        for x in range(location.x, location.x + item.size.x):
+            for y in range(location.y, location.y + item.size.y):
+
+                # Assign corresponding occupancy grid square the value of the item's id
+                self.occupancy[x, y] = id(item)
 
     # def is_valid(self):
     #     # Check item bounds
