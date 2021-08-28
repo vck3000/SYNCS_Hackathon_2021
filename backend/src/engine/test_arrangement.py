@@ -76,6 +76,7 @@ class TestArrangement(unittest.TestCase):
         self.assertEqual(arrangement.occupancy[2,4], 0)
 
 
+    # Arrangement with items out of bounds
     def test_invalid_arrangement_out_of_bound(self):
 
         item = Item(Coord(2, 3),5,10)
@@ -95,6 +96,25 @@ class TestArrangement(unittest.TestCase):
         # Item over the y edge of bag
         arrangement = Arrangement(self.bag)
         self.assertEqual(False, arrangement.add_item(item, Coord(0, 3)))
+
+    # Verify that items are being added to the dictionary
+    def test_dictionary_size(self):
+        arrangement = Arrangement(self.bag)
+        self.assertEqual(0, len(arrangement.items))
+
+        item1 = Item(Coord(1, 3),5,10)
+        arrangement.add_item(item1, Coord(0, 0))
+        self.assertEqual(1, len(arrangement.items))
+
+        item2 = Item(Coord(1, 2),5,10)
+        arrangement.add_item(item2, Coord(1, 0))
+        self.assertEqual(2, len(arrangement.items))
+
+        item3 = Item(Coord(1, 2),5,10)
+        arrangement.add_item(item3, Coord(2, 0))
+        self.assertEqual(3, len(arrangement.items))
+
+
 
     # def test_too_heavy(self):
     #     # 10kg bag is been given 30kg item

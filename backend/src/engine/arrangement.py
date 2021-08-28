@@ -1,5 +1,6 @@
 from typing import List
 import numpy as np
+import matplotlib.pyplot as plt
 
 from .bag import Bag
 from .coord import Coord
@@ -20,6 +21,7 @@ class Arrangement:
 
     def __init__(self, bag: Bag):
         self.bag = bag
+        self.items = dict()
 
         # Create occupancy matrix with bag dimensions
         self.occupancy = np.zeros((bag.size.x, bag.size.y), dtype=int)
@@ -43,7 +45,28 @@ class Arrangement:
                 # Assign corresponding occupancy grid square the value of the item's id
                 self.occupancy[x, y] = id(item)
 
+
+        #TODO: check bag max weight limit not exceeded
+
+        self.items[id(item)] = item
         return True
+
+
+    # Plot with matplotlib
+    def display(self):
+
+        data = self.occupancy
+
+        # Replace big id values in matrix with integers 1, 2, 3... etc so that heat map scales nicely
+        for key, index in zip(self.items, range(len(self.items))):
+            data = np.where(data == key, index+1, data)
+
+        plt.imshow(data, cmap='hot_r', origin='lower')
+        plt.xlabel("x")
+        plt.ylabel("y")
+        plt.title("Arrangement")
+        plt.show()
+
 
     # def is_valid(self):
     #     
