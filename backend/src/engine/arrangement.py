@@ -53,10 +53,10 @@ class Arrangement:
         #TODO: make add steps into separate function
         #! Should not add unless all checks passed! 
         # Place in occupancy grid
-            for x in range(location.x, location.x + item.size.x):
-                for y in range(location.y, location.y + item.size.y):
-                    # Assign corresponding occupancy grid square the value of the item's id
-                    self.occupancy[x, y] = id(item)
+        for x in range(location.x, location.x + item.size.x):
+            for y in range(location.y, location.y + item.size.y):
+                # Assign corresponding occupancy grid square the value of the item's id
+                self.occupancy[x, y] = id(item)
 
         # Increment mass
         self.mass_filled += item.get_mass()
