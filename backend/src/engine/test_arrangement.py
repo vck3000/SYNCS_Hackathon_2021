@@ -40,7 +40,7 @@ class TestArrangement(unittest.TestCase):
         self.assertNotEqual(arrangement.occupancy[2,3], id(item))
 
     # Helper function to create an arrangement with multiple items
-    def create_arrangement_multiple_items(self, items: List[Item], locations: List[Coord]):
+    def create_arrangement_multiple(self, items: List[Item], locations: List[Coord]):
         arrangement = Arrangement(self.bag)
 
         for item, location in zip(items, locations):
@@ -55,7 +55,7 @@ class TestArrangement(unittest.TestCase):
         item2 = Item(Coord(2, 2),5,10)
         items = [item1, item2]
         locations = [Coord(0,0), Coord(0, 3)]
-        arrangement = self.create_arrangement_multiple_items(items, locations)
+        arrangement = self.create_arrangement_multiple(items, locations)
 
         self.assertEqual(arrangement.occupancy[0,0], id(item1))
         self.assertEqual(arrangement.occupancy[0,1], id(item1))
@@ -76,27 +76,25 @@ class TestArrangement(unittest.TestCase):
         self.assertEqual(arrangement.occupancy[2,4], 0)
 
 
+    def test_invalid_arrangement_out_of_bound(self):
 
-    # def test_valid_arrangement(self):
-    #     arrangement = self.create_simple_arrangement(Coord(2, 3), Coord(0, 0))
-    #     self.assertEquals(True, arrangement.is_valid())
+        item = Item(Coord(2, 3),5,10)
 
-    # def test_invalid_arrangement_x_out_of_bound(self):
-    #     # Item way outside
-    #     arrangement = self.create_simple_arrangement(Coord(2, 3), Coord(10, 0))
-    #     self.assertEquals(False, arrangement.is_valid())
+        # Item way outside
+        arrangement = Arrangement(self.bag)
+        self.assertEqual(False, arrangement.add_item(item, Coord(10, 0)))
 
-    #     # Item over the edge of bag
-    #     arrangement = self.create_simple_arrangement(Coord(2, 3), Coord(4, 0))
-    #     self.assertEquals(False, arrangement.is_valid())
+        # Item over the edge of bag
+        arrangement = Arrangement(self.bag)
+        self.assertEqual(False, arrangement.add_item(item, Coord(4, 0)))
 
-    #     # Item on the edge of bag
-    #     arrangement = self.create_simple_arrangement(Coord(2, 3), Coord(3, 0))
-    #     self.assertEquals(True, arrangement.is_valid())
+        # Item on the edge of bag
+        arrangement = Arrangement(self.bag)
+        self.assertEqual(True, arrangement.add_item(item, Coord(3, 0)))
 
-    #     # Item over the y edge of bag
-    #     arrangement = self.create_simple_arrangement(Coord(2, 3), Coord(0, 3))
-    #     self.assertEquals(False, arrangement.is_valid())
+        # Item over the y edge of bag
+        arrangement = Arrangement(self.bag)
+        self.assertEqual(False, arrangement.add_item(item, Coord(0, 3)))
 
     # def test_too_heavy(self):
     #     # 10kg bag is been given 30kg item
