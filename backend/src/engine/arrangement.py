@@ -20,8 +20,9 @@ class Arrangement:
     """
 
     def __init__(self, bag: Bag):
-        self.bag = bag
-        self.items = dict()
+        self.bag = bag          # The bag
+        self.items = dict()     # Dictionary of items in the bag
+        self.mass_filled = 0    # Mass of items in the bag
 
         # Create occupancy matrix with bag dimensions
         self.occupancy = np.zeros((bag.size.x, bag.size.y), dtype=int)
@@ -31,6 +32,7 @@ class Arrangement:
     # Return true otherwise
     def add_item(self, item: Item, location: Coord):
 
+        #TODO: make checks into separate function
         # Check item bounds
         if location.x + item.size.x > self.bag.size.x:
             return False
@@ -38,16 +40,28 @@ class Arrangement:
         if location.y + item.size.y > self.bag.size.y:
             return False
 
-        # Iterate over x and y values
+        # Check bag max weight limit not exceeded
+        if self.mass_filled + item.get_mass() > self.bag.mass_limit:
+            return False
+
+        # Check occupancy grid vacant
         for x in range(location.x, location.x + item.size.x):
             for y in range(location.y, location.y + item.size.y):
+                if(self.occupancy[x, y] != 0):
+                    return False
 
-                # Assign corresponding occupancy grid square the value of the item's id
-                self.occupancy[x, y] = id(item)
+        #TODO: make add steps into separate function
+        #! Should not add unless all checks passed! 
+        # Place in occupancy grid
+            for x in range(location.x, location.x + item.size.x):
+                for y in range(location.y, location.y + item.size.y):
+                    # Assign corresponding occupancy grid square the value of the item's id
+                    self.occupancy[x, y] = id(item)
 
+        # Increment mass
+        self.mass_filled += item.get_mass()
 
-        #TODO: check bag max weight limit not exceeded
-
+        # Store in dictionary
         self.items[id(item)] = item
         return True
 
