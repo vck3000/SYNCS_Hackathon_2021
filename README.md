@@ -1,5 +1,19 @@
 # SYNCS_Hackathon_2021
 
+# Running
+
+## Main:
+```
+cd backend/src
+python3 -m engine.main
+```
+
+## Tests:
+```
+cd backend/src
+python3 -m unittest discover
+```
+
 ## Inspiration
 [Crappy packing by Coles](https://www.news.com.au/lifestyle/food/shoppers-frustrated-over-coles-click-and-collect-bag-issue/news-story/161c9f8a4cf7fa03736b2d7b96317b25)
 
